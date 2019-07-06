@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace OpenSpace.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
@@ -20,6 +21,11 @@ namespace OpenSpace.Controllers
         }
 
         // GET api/books
+        /// <summary>
+        /// Lista todos os livros
+        /// </summary>
+        /// <returns>Lista de livros</returns>
+        /// <response code="500">Erro interno do servidor</response>
         [HttpGet]
         public ActionResult<List<Book>> Get()
         {
@@ -27,6 +33,13 @@ namespace OpenSpace.Controllers
         }
 
         // GET api/books/5
+        /// <summary>
+        /// Procura um livro por meio do id
+        /// </summary>
+        /// <param name="id">Id do livro</param>
+        /// <returns>Livro de acordo com o id</returns>
+        /// <response code="404">Livro não encontrado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [HttpGet("{id}")]
         public ActionResult<Book> Get(int id)
         {
@@ -45,6 +58,22 @@ namespace OpenSpace.Controllers
         }
 
         // POST api/books
+        /// <summary>
+        /// Cria um novo livro
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/books
+        ///     {
+        ///        "name": "Livro X",
+        ///        "author": "Escritor Y"
+        ///     }
+        /// </remarks>
+        /// <param name="request">Dados do novo livro</param>
+        /// <returns>Id do livro inserido</returns>
+        /// <response code="400">Dados do modelo nulos ou inválidos</response>
+        /// <response code="500">Erro interno do servidor</response>
         [HttpPost]
         public ActionResult<int> Post(BookRequest request)
         {
@@ -60,6 +89,14 @@ namespace OpenSpace.Controllers
         }
 
         // PUT api/books/5
+        /// <summary>
+        /// Edita um livro
+        /// </summary>
+        /// <param name="id">Id do livro a ser editado</param>
+        /// <param name="request">Dados do livro editado</param>
+        /// <response code="400">Dados do modelo nulos ou inválidos</response>
+        /// <response code="404">Livro não encontrado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [HttpPut("{id}")]
         public ActionResult Put(int id, BookRequest request)
         {
@@ -80,6 +117,12 @@ namespace OpenSpace.Controllers
         }
 
         // DELETE api/books/5
+        /// <summary>
+        /// Excluir um livro
+        /// </summary>
+        /// <param name="id">Id do livro</param>
+        /// <response code="404">Livro não encontrado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
